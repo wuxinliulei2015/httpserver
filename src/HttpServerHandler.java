@@ -2,18 +2,18 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.ssl.HttpsURLConnection;
 
 public class HttpServerHandler implements HttpHandler
 {
 	public void onError(HttpExchange exchange) throws IOException
 	{
-		exchange.sendResponseHeaders(HttpsURLConnection.HTTP_BAD_REQUEST, 0);
+		exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, 0);
 		exchange.getResponseBody().close();
 	}
 
@@ -47,7 +47,6 @@ public class HttpServerHandler implements HttpHandler
 		return builder.toString();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void handle(HttpExchange exchange) throws IOException
 	{
@@ -64,10 +63,12 @@ public class HttpServerHandler implements HttpHandler
 		responseHeaders.set("Content-Type", "text/plain");
 		responseHeaders.set("Content-length", String.valueOf(result.length));
 
-		exchange.sendResponseHeaders(HttpsURLConnection.HTTP_OK, 0);
+		exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 		os = exchange.getResponseBody();
 		os.write(result);
 
 		os.close();
+
+		System.out.println("path=" + path + " query" + query);
 	}
 }
