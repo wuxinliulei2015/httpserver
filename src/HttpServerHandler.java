@@ -69,6 +69,6 @@ public class HttpServerHandler implements HttpHandler
 
 		os.close();
 
-		System.out.println("path=" + path + " query" + query);
+		System.out.println("path=" + path + " query=" + query);
 	}
 }

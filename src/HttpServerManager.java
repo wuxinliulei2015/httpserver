@@ -11,6 +11,9 @@ public class HttpServerManager
 
 	private HttpServer httpServer = null;
 
+	/**
+	 * 
+	 */
 	private ExecutorService executor = null;
 
 	private HttpServerManager()
@@ -37,5 +40,10 @@ public class HttpServerManager
 	{
 		this.executor.shutdown();
 		this.httpServer.stop(0);
+	}
+
+	public static void main(String[] args) throws IOException
+	{
+		HttpServerManager.getInstance().init();
 	}
 }
